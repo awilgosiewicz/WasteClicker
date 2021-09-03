@@ -34,9 +34,8 @@ public class MainActivity extends AppCompatActivity {
 */
 
         UsernameEt = (EditText) findViewById(R.id.etUserName);
-        etEmail = (EditText) findViewById(R.id.email);
         PasswordEt = (EditText) findViewById(R.id.etPassword);
-        etAge = (EditText) findViewById(R.id.Age);
+
     }
 
     public void OnLogin(View view){
@@ -46,22 +45,16 @@ public class MainActivity extends AppCompatActivity {
 
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
+
+        openGame();
     }
 
+    public void OpenReg(View view){
+        startActivity(new Intent(this, Register.class));
+    }
 
-    /*
     public void openGame() {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
-*/
-/*
-    public void display(String title, String message){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setCancelable(true);
-        builder.setTitle(title);
-        builder.setMessage(message);
-        builder.show();
-    }
-*/
 }

@@ -42,4 +42,13 @@ android:id="@+id/container"
     android:text="@string/shop"
     app:backgroundTint="#4CAF50"
     android:onClick="onClick"/>
+
+    <Button
+        android:id="@+id/scoreboard"
+        android:layout_width="155dp"
+        android:layout_height="65dp"
+        android:layout_gravity="center"
+        android:text="Scoreboard"
+        android:onClick="OnShow"
+        />
 </LinearLayout>

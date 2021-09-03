@@ -35,8 +35,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvCps;
 
     private int[] Images = {R.drawable.grabber};
-    private String[] Names = {"Additional grabber"};
-    private String[] Description = {"+2 waste per second"};
+    private String[] Names = {"Additional grabber \n cost:100"};
+    private String[] Description = {"+100 waste per second"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,5 +235,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    public void OnShow(View view){
+        String type = "scoreboard";
 
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute(type);
+    }
 }
