@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="etNewName" type="id" />
+    <item name="etNewEmail" type="id" />
+    <item name="etNewAge" type="id" />
+</resources>

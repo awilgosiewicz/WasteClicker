@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+tools:context=".GameActivity"
+android:id="@+id/container"
+    >
+
+<TextView
+    android:id="@+id/tvPoints"
+    android:layout_width="126dp"
+    android:layout_height="37dp"
+    android:layout_gravity="center"
+    android:text="00000"
+    android:textSize="32sp" />
+
+<TextView
+    android:id="@+id/tvCps"
+    android:layout_width="126dp"
+    android:layout_height="58dp"
+    android:layout_gravity="center"
+    android:text="0 cps"
+    android:textSize="20sp" />
+
+<ImageView
+    android:id="@+id/imgTrash"
+    android:layout_width="292dp"
+    android:layout_height="338dp"
+    android:layout_gravity="center"
+    android:background="@drawable/rubbish"
+    android:onClick="onClick" />
+
+<Button
+    android:id="@+id/btnShop"
+    style="@style/Widget.AppCompat.Button.Colored"
+    android:layout_width="155dp"
+    android:layout_height="65dp"
+    android:layout_gravity="center"
+    android:text="@string/shop"
+    app:backgroundTint="#4CAF50"
+    android:onClick="onClick"/>
+</LinearLayout>
