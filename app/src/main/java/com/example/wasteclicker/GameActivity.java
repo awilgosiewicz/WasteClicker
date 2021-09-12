@@ -37,13 +37,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private TextView tvCps;
 
     private int[] Images = {R.drawable.grabber};
-    private String[] Names = {"Additional grabber \n cost:100"};
-    private String[] Description = {"+100 waste per second"};
+    private String[] Names = {"Grabber, cost:50"};
+    private String[] Description = {"+2 waste per second"};
 
 
     Handler handler = new Handler();
     Runnable runnable;
-    int delay = 10 * 1000; //  * 1000 miliseconds //loop every x seconds
+    int delay = 30 * 1000; //  * 1000 miliseconds //loop every x seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK){
             showTrashFragment();
-            startActivity(new Intent(this, GameActivity.class));
+            tvPoints = findViewById(R.id.tvPoints);
+            ttf = Typeface.createFromAsset(getAssets(), "28DaysLater.ttf");
+            tvPoints.setTypeface(ttf);
+            tvCps = findViewById(R.id.tvCps);
+            tvCps.setTypeface(ttf);
+            random = new Random();
+            open();
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -107,7 +114,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private void showTrashFragment(){
         ViewGroup container = findViewById(R.id.container);
         container.removeAllViews();
-        container.addView(getLayoutInflater().inflate(R.layout.activity_main, null));
+        container.addView(getLayoutInflater().inflate(R.layout.game_activity, null));
 
     }
 
@@ -147,7 +154,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void update(){
-        points += cps/1;
+        points += cps/6;
         tvPoints.setText(Integer.toString(points));
         tvCps.setText(Integer.toString(cps) + "cps");
     }
@@ -223,7 +230,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
             convertView.setOnClickListener(v -> {
                 if(getCount() == 1){
-                    if(points >= 100){
+                    if(points >= 50){
                         updateCps(2);
                         updatePoints(2);
                         save();

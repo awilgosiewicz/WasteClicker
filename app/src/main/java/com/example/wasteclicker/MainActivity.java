@@ -10,25 +10,14 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button playBtn;
-    Button saveBtn, btnViewData;
-    EditText UsernameEt, etEmail, PasswordEt ,etAge;
+
+    EditText UsernameEt,PasswordEt;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-/*
-        playBtn =(Button) findViewById(R.id.playBtn);
-        playBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGame();
-            }
-        });
-        peopleDB = new DatabaseHelper(this);
-*/
 
         UsernameEt = (EditText) findViewById(R.id.etUserName);
         PasswordEt = (EditText) findViewById(R.id.etPassword);
