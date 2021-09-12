@@ -2,14 +2,11 @@ package com.example.wasteclicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void OnLogin(View view){
         String username = UsernameEt.getText().toString();
         String password = PasswordEt.getText().toString();
@@ -46,15 +44,18 @@ public class MainActivity extends AppCompatActivity {
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type, username, password);
 
-        openGame();
+        Intent openGame = new Intent(this, GameActivity.class);
+        openGame.putExtra("name_key", username);
+        startActivity(openGame);
     }
+
+
 
     public void OpenReg(View view){
         startActivity(new Intent(this, Register.class));
     }
 
-    public void openGame() {
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
-    }
+
+
+
 }

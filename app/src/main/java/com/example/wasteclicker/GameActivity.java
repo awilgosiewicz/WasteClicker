@@ -2,11 +2,13 @@ package com.example.wasteclicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -38,6 +40,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     private String[] Names = {"Additional grabber \n cost:100"};
     private String[] Description = {"+100 waste per second"};
 
+
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 10 * 1000; //  * 1000 miliseconds //loop every x seconds
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +59,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         open();
     }
 
+    @Override
+    protected void onResume() {
+        handler.postDelayed(runnable = new Runnable() {
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                OnUpdate();
+            }
+        }, delay);
+        super.onResume();
+    }
 
     @Override
 
     public void onPause(){
+        handler.removeCallbacks(runnable);
         super.onPause();
         save();
     }
@@ -81,14 +99,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK){
             showTrashFragment();
-            tvPoints = findViewById(R.id.tvPoints);
-            ttf = Typeface.createFromAsset(getAssets(), "28DaysLater.ttf");
-            tvPoints.setTypeface(ttf);
-            tvCps = findViewById(R.id.tvCps);
-            tvCps.setTypeface(ttf);
-            random = new Random();
-            open();
-            return true;
+            startActivity(new Intent(this, GameActivity.class));
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -136,7 +147,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void update(){
-        points += cps/100;
+        points += cps/1;
         tvPoints.setText(Integer.toString(points));
         tvCps.setText(Integer.toString(cps) + "cps");
     }
@@ -173,7 +184,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public class TrashCounter {
-
         private Timer timer;
 
         public TrashCounter(){
@@ -181,12 +191,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             timer.scheduleAtFixedRate(new TimerTask(){
                 @Override
                 public void run(){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            update();
-                        }
-                    });
+                    runOnUiThread(() -> update());
                 }
             }, 1000, 10);
         }
@@ -216,17 +221,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             ((TextView)convertView.findViewById(R.id.tvName)).setText(Names[position]);
             ((TextView)convertView.findViewById(R.id.tvDescription)).setText(Description[position]);
 
-            convertView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    if(getCount() == 1){
-                        if(points >= 100){
-                            updateCps(100);
-                            updatePoints(100);
-                            save();
-                        } else {
-                            (new androidx.appcompat.app.AlertDialog.Builder(GameActivity.this)).setMessage("Not enough points.").show();
-                        }
+            convertView.setOnClickListener(v -> {
+                if(getCount() == 1){
+                    if(points >= 100){
+                        updateCps(2);
+                        updatePoints(2);
+                        save();
+                    } else {
+                        (new androidx.appcompat.app.AlertDialog.Builder(GameActivity.this)).setMessage("Not enough points.").show();
                     }
                 }
             });
@@ -241,4 +243,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         BackgroundWorker backgroundWorker = new BackgroundWorker(this);
         backgroundWorker.execute(type);
     }
+
+    public void OnUpdate(){
+
+        Intent intent = getIntent();
+
+        String str_username = intent.getStringExtra("name_key");
+        String str_score = tvPoints.getText().toString();
+
+        String type = "update";
+
+        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
+        backgroundWorker.execute(type, str_username, str_score);
+
+    }
+
+
 }
+
